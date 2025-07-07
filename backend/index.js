@@ -17,7 +17,7 @@ connectDB();
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://jobportal-gun0.onrender.com"
+    "https://portal-m082.onrender.com"
   ],
   credentials: true
 }));
