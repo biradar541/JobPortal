@@ -16,53 +16,59 @@ const Job = ({ job }) => {
   };
 
   return (
-    <div className="p-5 rounded-md shadow-xl bg-white border border-gray-100">
+    <div className="p-4 sm:p-5 rounded-md shadow-md bg-white border border-gray-100 transition hover:shadow-xl">
+      {/* Header */}
       <div className="flex items-center justify-between">
-        <p className="text-sm text-gray-500">
-          {daysAgoFunction(job?.createdAt)}
-        </p>
+        <p className="text-sm text-gray-500">{daysAgoFunction(job?.createdAt)}</p>
         <Button variant="outline" className="rounded-full" size="icon">
-          <Bookmark />
+          <Bookmark className="h-4 w-4" />
         </Button>
       </div>
 
-      <div className="flex items-center gap-2 my-2">
-        <Button className="p-6" variant="outline" size="icon">
+      {/* Company Info */}
+      <div className="flex items-center gap-3 my-3">
+        <Button className="p-3 sm:p-4" variant="outline" size="icon">
           <Avatar>
             <AvatarImage src={job?.company?.logo || "/default-logo.png"} />
           </Avatar>
         </Button>
         <div>
-          <h1 className="font-medium text-lg">{job?.company?.name}</h1>
+          <h1 className="font-semibold text-base">{job?.company?.name}</h1>
           <p className="text-sm text-gray-500">{job?.location || "India"}</p>
         </div>
       </div>
 
-      <div>
-        <h1 className="font-bold text-lg my-2">{job?.title}</h1>
-        <p className="text-sm text-gray-600">{job?.description}</p>
+      {/* Job Info */}
+      <div className="mb-3">
+        <h1 className="font-bold text-lg">{job?.title}</h1>
+        <p className="text-sm text-gray-600 line-clamp-2">{job?.description}</p>
       </div>
 
-      <div className="flex items-center gap-2 mt-4">
-        <Badge className="text-blue-700 font-bold" variant="ghost">
+      {/* Badges */}
+      <div className="flex flex-wrap items-center gap-2 mt-3">
+        <Badge className="text-blue-700 font-semibold text-xs" variant="ghost">
           {job?.position} Positions
         </Badge>
-        <Badge className="text-[#F83002] font-bold" variant="ghost">
+        <Badge className="text-[#F83002] font-semibold text-xs" variant="ghost">
           {job?.jobType}
         </Badge>
-        <Badge className="text-[#7209b7] font-bold" variant="ghost">
+        <Badge className="text-[#7209b7] font-semibold text-xs" variant="ghost">
           {job?.salary} LPA
         </Badge>
       </div>
 
-      <div className="flex items-center gap-4 mt-4">
+      {/* Action Buttons */}
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3 mt-4">
         <Button
           onClick={() => navigate(`/description/${job?._id}`)}
           variant="outline"
+          className="w-full sm:w-auto"
         >
           Details
         </Button>
-        <Button className="bg-[#7209b7]">Save For Later</Button>
+        <Button className="bg-[#7209b7] text-white w-full sm:w-auto">
+          Save For Later
+        </Button>
       </div>
     </div>
   );

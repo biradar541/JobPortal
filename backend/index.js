@@ -11,7 +11,7 @@ import path from "path";
 dotenv.config({});
 const app=express();
 connectDB();
-const _dirname = path.resolve();
+// const _dirname = path.resolve();
 
 app.use(cors({
   origin: "http://localhost:5173", // Your frontend URL
@@ -28,7 +28,7 @@ app.use("/api/v1/job", jobRoute);
 app.use("/api/v1/application", applicationRoute);
 
 
-app.use(express.static(path.join(_dirname, "frontend", "dist"))); 
+// app.use(express.static(path.join(_dirname, "frontend", "dist"))); 
 
 const port=process.env.PORT || 3000;
 app.listen(port,()=>{
