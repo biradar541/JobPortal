@@ -14,9 +14,10 @@ connectDB();
 // const _dirname = path.resolve();
 
 app.use(cors({
-  origin: "http://localhost:5173", // Your frontend URL
-  credentials: true,              // Allow cookies to be sent
+  origin: ["http://localhost:5173", "https://jobportal-gun0.onrender.com"],
+  credentials: true
 }));
+
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
