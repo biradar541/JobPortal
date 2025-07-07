@@ -42,7 +42,7 @@ const Signup = () => {
 
     try {
       dispatch(setLoading(true));
-      const response = await fetch("http://localhost:8000/api/v1/user/register", {
+      const response = await fetch("https://jobportal-backend-vi5h.onrender.com/api/v1/user/register", {
         method: "POST",
         body: formData,
         credentials: "include",
