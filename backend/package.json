@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon index.js",
-    "start":"nodemon index.js"
+    "start": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
@@ -17,8 +17,9 @@
     "cors": "^2.8.5",
     "datauri": "^4.1.0",
     "dotenv": "^16.5.0",
-    "fuse.js": "^7.1.0",
     "express": "^5.1.0",
+    "express-rate-limit": "^7.5.1",
+    "fuse.js": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.14.2",
     "multer": "^2.0.1",
