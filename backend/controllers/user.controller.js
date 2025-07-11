@@ -135,9 +135,10 @@ export const logout = async (req, res) => {
   try {
     return res
       .status(200)
-      .cookie("token", "", {
+      .cookie("token","", {
         httpOnly: true,                            // ✅ must match login
-        sameSite: "strict",                        // ✅ must match login // ✅ if using HTTPS
+       sameSite: "None",                           // ✅ must match login 
+        secure: true,                              // ✅ if using HTTPS
         path: "/",                                 // ✅ must match login
         expires: new Date(0),                      // ✅ expires immediately
       })
