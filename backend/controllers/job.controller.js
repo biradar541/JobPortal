@@ -1,4 +1,5 @@
 import {Job} from "../models/job.model.js"
+import Fuse from "fuse.js";
 // Admin side controller
 export const postJob = async (req, res) => {
     try {
