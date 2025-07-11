@@ -7,6 +7,8 @@ import userRoute from "./routes/user.route.js";
 import companyRoute from "./routes/company.route.js";
 import jobRoute from "./routes/job.route.js";
 import applicationRoute from "./routes/application.route.js";
+import { globalLimiter } from "./middlewares/rateLimiter.js"; // ✅ Import limiter
+
 
 dotenv.config();
 
@@ -25,6 +27,11 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+// ✅ Apply global rate limiter before routes
+app.set("trust proxy", 1); // trust proxy (important for production)
+app.use(globalLimiter); // ✅ Global rate limiter applied here
+
 
 // ✅ Route Mounting — Double check all are correct and NO extra colons
 app.use("/api/v1/user", userRoute);
