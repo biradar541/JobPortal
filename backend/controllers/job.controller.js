@@ -82,28 +82,47 @@ export const GetJobById = async (req, res) => {
 }
 
 export const GetAllJobs = async (req, res) => {
-    try {
-        const keyword = req.query.keyword || "";
-        const query = {
-            $or: [
-                { title: { $regex: keyword, $options: "i" } },
-                { description: { $regex: keyword, $options: "i" } },
-            ]
-        };
-        const jobs = await Job.find(query).populate({
-            path: "company"
-        }).sort({ createdAt: -1 });
-        if (!jobs) {
-            return res.status(404).json({
-                message: "Jobs not found.",
-                success: false
-            })
-        };
-        return res.status(200).json({
-            jobs,
-            success: true
-        })
-    } catch (error) {
-        console.log(error);
+  try {
+    const keyword = req.query.keyword || "";
+
+    // Step 1: Get all jobs (you can filter this if needed for performance)
+    const allJobs = await Job.find()
+      .populate("company")
+      .sort({ createdAt: -1 });
+
+    // Step 2: If keyword exists, use Fuse.js to perform fuzzy search
+    if (keyword.trim() !== "") {
+      const fuse = new Fuse(allJobs, {
+        keys: ["title", "description", "location", "jobType","Salary"], // searchable fields
+        threshold: 0.3, // lower = stricter, higher = fuzzier (0.3 is good balance)
+      });
+
+      const fuzzyResults = fuse.search(keyword);
+      const matchedJobs = fuzzyResults.map((result) => result.item);
+
+      if (matchedJobs.length === 0) {
+        return res.status(404).json({
+          message: "No jobs matched your search.",
+          success: false,
+        });
+      }
+
+      return res.status(200).json({
+        jobs: matchedJobs,
+        success: true,
+      });
     }
-}
+
+    // Step 3: If no keyword, return all jobs normally
+    return res.status(200).json({
+      jobs: allJobs,
+      success: true,
+    });
+  } catch (error) {
+    console.error("GetAllJobs Error:", error);
+    return res.status(500).json({
+      message: "Server error",
+      success: false,
+    });
+  }
+};
